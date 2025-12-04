@@ -1,4 +1,4 @@
-import React from 'react';
+import { X } from 'lucide-react';
 
 interface RightPanelProps {
   temperature: number;
@@ -7,6 +7,7 @@ interface RightPanelProps {
   setMaxTokens: (value: number) => void;
   systemPrompt: string;
   setSystemPrompt: (value: string) => void;
+  onClose: () => void;
 }
 
 export function RightPanel({
@@ -15,15 +16,41 @@ export function RightPanel({
   maxTokens,
   setMaxTokens,
   systemPrompt,
-  setSystemPrompt
+  setSystemPrompt,
+  onClose
 }: RightPanelProps) {
   return (
-    <div className="w-[320px] flex-shrink-0 bg-[#1A1A1A] flex flex-col overflow-y-auto">
-      {/* Header */}
-      <div className="p-6 pb-5">
+    <div
+      className="w-[320px] flex-shrink-0 bg-[#1A1A1A] flex flex-col overflow-y-auto"
+      style={{
+        animation: 'slideInRight 300ms cubic-bezier(0.4, 0.0, 0.2, 1)',
+      }}
+    >
+      <style>{`
+        @keyframes slideInRight {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
+
+      {/* Header with Close Button */}
+      <div className="p-6 pb-5 flex items-center justify-between">
         <h2 className="text-zinc-400" style={{ fontSize: '13px', fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
           Parameters & Config
         </h2>
+        <button
+          onClick={onClose}
+          className="p-1.5 text-zinc-600 hover:text-zinc-300 hover:bg-white/5 rounded-lg transition-colors"
+          title="Close settings"
+        >
+          <X className="w-4 h-4" strokeWidth={1.5} />
+        </button>
       </div>
 
       {/* Content */}
@@ -106,7 +133,7 @@ export function RightPanel({
           <span className="text-zinc-700" style={{ fontSize: '12px', fontWeight: 300 }}>API Connected</span>
         </div>
       </div>
-      
+
       <style>{`
         .slider-clean {
           height: 2px;

@@ -7,6 +7,8 @@ interface InputContainerProps {
   setMessage: (value: string) => void;
   selectedModel: string;
   setSelectedModel: (value: string) => void;
+  showRightPanel: boolean;
+  setShowRightPanel: (value: boolean) => void;
 }
 
 export function InputContainer({
@@ -14,13 +16,32 @@ export function InputContainer({
   message,
   setMessage,
   selectedModel,
-  setSelectedModel
+  setSelectedModel,
+  showRightPanel,
+  setShowRightPanel
 }: InputContainerProps) {
   const [showModelDropdown, setShowModelDropdown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  // High creativity mode when temperature >= 0.6
-  const isHighCreativity = temperature >= 0.6;
+  // Dynamic border color based on temperature
+  const getBorderGlow = () => {
+    if (temperature >= 0.7) {
+      // High temperature: Orange/Purple gradient (creativity/heat)
+      return isFocused
+        ? '0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1.5px rgba(249, 115, 22, 0.5), 0 0 20px rgba(249, 115, 22, 0.3)'
+        : '0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(249, 115, 22, 0.4)';
+    } else if (temperature <= 0.3) {
+      // Low temperature: Blue/Green gradient (precision/coolness)
+      return isFocused
+        ? '0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1.5px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3)'
+        : '0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.4)';
+    } else {
+      // Neutral temperature: Subtle grey
+      return isFocused
+        ? '0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1.5px rgba(255, 255, 255, 0.15)'
+        : '0 8px 24px rgba(0, 0, 0, 0.4)';
+    }
+  };
 
   const models = ['GPT-4', 'GPT-3.5-Turbo', 'Claude-3', 'Gemini-Pro'];
 
@@ -35,9 +56,7 @@ export function InputContainer({
       <div
         className="bg-[#2A2A2A] rounded-2xl"
         style={{
-          boxShadow: isHighCreativity
-            ? '0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(249, 115, 22, 0.3)'
-            : '0 8px 24px rgba(0, 0, 0, 0.4)',
+          boxShadow: getBorderGlow(),
           maxHeight: isFocused ? '300px' : '64px',
           overflow: isFocused ? 'visible' : 'hidden',
           transition: 'all 500ms cubic-bezier(0.4, 0.0, 0.2, 1)',
@@ -120,7 +139,12 @@ export function InputContainer({
           <div className="flex items-center gap-2">
             <button
               onMouseDown={(e) => e.preventDefault()}
-              className="p-2.5 text-zinc-600 hover:text-zinc-400 hover:bg-white/5 rounded-full transition-colors"
+              onClick={() => setShowRightPanel(!showRightPanel)}
+              className={`p-2.5 rounded-full transition-all ${showRightPanel
+                  ? 'text-zinc-300 bg-white/10'
+                  : 'text-zinc-600 hover:text-zinc-400 hover:bg-white/5'
+                }`}
+              title={showRightPanel ? 'Hide settings' : 'Show settings'}
             >
               <Settings className="w-5 h-5" strokeWidth={1.5} />
             </button>
