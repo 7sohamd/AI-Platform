@@ -58,8 +58,8 @@
   [data-theme="light"] {
     --bg-primary: #FFFFFF;
     --bg-secondary: #F5F5F5;
-    --bg-tertiary: #E8E8E8;
-    --bg-input: #FAFAFA;
+    --bg-tertiary: #EBEBEB;
+    --bg-input: #F0F0F0;
     --text-primary: #1A1A1A;
     --text-secondary: #525252;
     --text-tertiary: #737373;

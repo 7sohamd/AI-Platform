@@ -21,8 +21,11 @@ export function RightPanel({
 }: RightPanelProps) {
   return (
     <div
-      className="w-[320px] flex-shrink-0 bg-[#1A1A1A] flex flex-col overflow-y-auto"
+      className="w-[320px] md:w-[320px] w-full max-w-[320px] flex-shrink-0 flex flex-col overflow-y-auto"
       style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderLeft: '1px solid var(--border-color)',
+        transition: 'background-color 0.5s ease, border-color 0.5s ease',
         animation: 'slideInRight 300ms cubic-bezier(0.4, 0.0, 0.2, 1)',
       }}
     >

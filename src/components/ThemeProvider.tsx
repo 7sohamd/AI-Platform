@@ -18,6 +18,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         localStorage.setItem('theme', theme);
         document.documentElement.setAttribute('data-theme', theme);
+
+        // Add smooth transition class
+        document.documentElement.style.transition = 'background-color 0.5s ease, color 0.5s ease';
     }, [theme]);
 
     const toggleTheme = () => {

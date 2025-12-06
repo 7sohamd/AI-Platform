@@ -1,5 +1,6 @@
 
 import { CodeBlock } from './CodeBlock';
+import { useTheme } from './ThemeProvider';
 
 interface ChatMessageProps {
   type: 'user' | 'ai';
@@ -7,10 +8,23 @@ interface ChatMessageProps {
 }
 
 export function ChatMessage({ type, content }: ChatMessageProps) {
+  const { theme } = useTheme();
+
   if (type === 'user') {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[75%] px-5 py-4 bg-zinc-800/40 text-zinc-100 rounded-2xl" style={{ fontSize: '16px', fontWeight: 300, lineHeight: '1.6' }}>
+        <div
+          className="px-5 py-4 rounded-2xl"
+          style={{
+            maxWidth: 'min(75%, calc(100vw - 3rem))',
+            backgroundColor: 'var(--bg-tertiary)',
+            color: theme === 'dark' ? '#E5E5E5' : '#1A1A1A',
+            fontSize: '16px',
+            fontWeight: 300,
+            lineHeight: '1.6',
+            transition: 'background-color 0.5s ease, color 0.5s ease'
+          }}
+        >
           {content}
         </div>
       </div>
@@ -22,7 +36,18 @@ export function ChatMessage({ type, content }: ChatMessageProps) {
 
   return (
     <div className="flex justify-start">
-      <div className="max-w-[85%] px-5 py-4 bg-zinc-900/30 text-zinc-300 rounded-2xl" style={{ fontSize: '17px', fontWeight: 300, lineHeight: '1.6' }}>
+      <div
+        className="px-5 py-4 rounded-2xl"
+        style={{
+          maxWidth: 'min(85%, calc(100vw - 3rem))',
+          backgroundColor: 'var(--bg-input)',
+          color: theme === 'dark' ? '#D4D4D4' : '#1A1A1A',
+          fontSize: '17px',
+          fontWeight: 300,
+          lineHeight: '1.6',
+          transition: 'background-color 0.5s ease, color 0.5s ease'
+        }}
+      >
         {parts.map((part, index) => {
           if (index % 2 === 1) {
             // Code block

@@ -1,5 +1,4 @@
 
-
 import { Plus, MessageSquare, User, LogOut } from 'lucide-react';
 
 export function LeftSidebar() {
@@ -22,7 +21,14 @@ export function LeftSidebar() {
   };
 
   return (
-    <div className="w-[260px] flex-shrink-0 bg-[#1A1A1A] flex flex-col">
+    <div
+      className="w-[260px] flex-shrink-0 flex flex-col h-screen"
+      style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderRight: '1px solid var(--border-color)',
+        transition: 'background-color 0.5s ease, border-color 0.5s ease'
+      }}
+    >
       {/* New Chat Button */}
       <div className="p-6">
         <button
